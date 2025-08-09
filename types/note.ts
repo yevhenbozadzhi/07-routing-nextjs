@@ -1,4 +1,5 @@
 export interface Note {
+  notes: Note[];
   tag: NoteTag;
   id: string;
   title: string;

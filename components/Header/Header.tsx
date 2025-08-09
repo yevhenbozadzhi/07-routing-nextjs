@@ -1,7 +1,11 @@
 import Link from 'next/link'
 import css from './Header.module.css'
+// import CategoryMenu from '../../components/TagsMenu/TagsMenu';
+import TagsMenu from '../../components/TagsMenu/TagsMenu';
 
 const Header = () => {
+    const categories = ['All', 'Work', 'Personal', 'Meeting', 'Shopping', 'Todo'];
+    
     return (
         <header className={css.header}>
             <Link href="/" aria-label="Home">
@@ -13,7 +17,7 @@ const Header = () => {
                         <Link href="/">Home</Link>
                     </li>
                     <li>
-                        <Link href="/notes">Notes</Link>
+                        <TagsMenu categories={categories}/>
                     </li>
                 </ul>
             </nav>
@@ -21,7 +25,5 @@ const Header = () => {
 
     );
 } 
-
-
 
 export default Header;

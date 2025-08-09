@@ -1,9 +1,11 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchNoteById } from "../../../lib/api";
-import css from "../../main.module.css";
-import type { Note } from "../../../types/note";
+import { fetchNoteById } from "../../../../lib/api";
+import css from "./NoteDetails.module.css";
+import type { Note } from "../../../../types/note";
+import { useRouter } from "next/navigation";
+
 
 interface NoteDetailsProps {
   noteId: string;
@@ -16,6 +18,12 @@ export default function NoteDetailsClient({ noteId }: NoteDetailsProps) {
     refetchOnMount: false,
   });
 
+  const router = useRouter();
+
+  const handleGoBack = () => {
+    const issue = confirm("Are you sure?");
+    if (issue) { router.back() };
+   };
   if (isLoading) return <p>Loading, please wait...</p>;
   if (error || !note) return <p>Something went wrong.</p>;
 
@@ -30,6 +38,7 @@ export default function NoteDetailsClient({ noteId }: NoteDetailsProps) {
           Created: {new Date(note.createdAt).toLocaleDateString()}
         </p>
       </div>
+      <button className={css.button} onClick={ handleGoBack} >Go Back</button>
     </div>
   );
 }

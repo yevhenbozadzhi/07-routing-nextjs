@@ -1,6 +1,8 @@
+'use client';
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-import css from "../../css/Modal.module.css";
+import css from "./Modal.module.css";
+import { useRouter } from "next/router";
 
 export interface ModalProps {
   onClose: () => void;
@@ -37,6 +39,7 @@ export default function Modal({ onClose, children }: ModalProps) {
       onClick={handleBackdropClick}
     >
       <div className={css.modal}>{children}</div>
+      <button onClick={close}>Return</button>
     </div>,
     document.body
   );
