@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import css from './TagsMenu.module.css';
 import Link from 'next/link';
 
+interface TagsMenuProps{
+    tags: string[],
+}
 
-
-const TagsMenu = () => {
+const TagsMenu = ({tags}: TagsMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 

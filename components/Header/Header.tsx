@@ -3,8 +3,10 @@ import css from './Header.module.css'
 // import CategoryMenu from '../../components/TagsMenu/TagsMenu';
 import TagsMenu from '../../components/TagsMenu/TagsMenu';
 
+
+
 const Header = () => {
-    const categories = ['All', 'Work', 'Personal', 'Meeting', 'Shopping', 'Todo'];
+    const tags = ['All', 'Work', 'Personal', 'Meeting', 'Shopping', 'Todo'];
     
     return (
         <header className={css.header}>
@@ -17,7 +19,7 @@ const Header = () => {
                         <Link href="/">Home</Link>
                     </li>
                     <li>
-                        <TagsMenu categories={categories}/>
+                        <TagsMenu tags={tags}/>
                     </li>
                 </ul>
             </nav>
