@@ -1,5 +1,5 @@
 import NoteList from '@/components/NoteList/NoteList';
-import { getNotes } from '@/lib/api';
+import { fetchNotes} from '@/lib/api';
 import React from 'react';
 import NotesClient from './Notes.client';
 
@@ -11,12 +11,12 @@ const NotesByCategory = async ({
     params
 }: Props) => {
     const { slug } = await params;
-    const category = slug[0] === 'All' ? undefined : slug[0]
-    const response = await getNotes(category);
+    const tag = slug[0] === 'All' ? undefined : slug[0]
+    const response = await fetchNotes(1, 12, '', tag);
   return (
     <div>
-                <h1>{category}</h1>
-          {response?.notes?.length > 0 && <NotesClient initialData={response}/>}
+                <h1>{tag}</h1>
+      {response?.notes?.length > 0 && <NotesClient initialData={response} tagId={ tag} />}
     </div>
   );
 };

@@ -7,15 +7,15 @@ import css from './NotePreview.client.module.css'
 import Modal from "@/components/Modal/Modal";
 import { Note } from "@/types/note";
 
-// interface NotePreviewProps {
-//   noteId: string;
-// }
+interface NotePreviewProps {
+  noteId: string;
+}
 
 
-export default function NotePreviewClient() {
+export default function NotePreviewClient({noteId}: NotePreviewProps) {
     const { id } = useParams<{ id: string }>();
   const { data: note, isLoading, error } = useQuery<Note>({
-    queryKey: ["note"],
+    queryKey: ["note", noteId],
     queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
   });
@@ -23,8 +23,7 @@ export default function NotePreviewClient() {
   const router = useRouter();
 
   const handleGoBack = () => {
-    const issue = confirm("Are you sure?");
-    if (issue) { router.back() };
+    router.back();
    };
   if (isLoading) return <p>Loading, please wait...</p>;
   if (error || !note) return <p>Something went wrong.</p>;
@@ -36,12 +35,13 @@ export default function NotePreviewClient() {
       <div className={css.item}>
         <div className={css.header}>
           <h2>{note.title}</h2>
-        </div>
+            </div>
+            {note.tag && <p className={css.tag}>Tag: { note.tag}</p>}
         <p className={css.content}>{note.content}</p>
         <p className={css.date}>
           Created: {new Date(note.createdAt).toLocaleDateString()}
         </p>
-      </div>
+          </div>
       <button className={css.button} onClick={ handleGoBack} >Go Back</button>
       </div>
       </Modal>

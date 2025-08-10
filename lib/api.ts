@@ -1,6 +1,5 @@
 import axios from "axios";
 import type { NewNoteData, Note } from "@/types/note";
-import { Post } from "@/types/post";
 
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
@@ -14,20 +13,18 @@ const instance = axios.create({
 
 
 export interface FetchNotesResponse {
-  total: number;
   notes: Note[];
   totalPages: number,
-  categories?: Category[],
 }
 
 export const fetchNotes = async (
-  page = 1,
-  perPage = 12,
-  search = ""
-): Promise<FetchNotesResponse> => {
-  const params: Record<string, string | number> = { page, perPage };
+page = 1, perPage: number, search = "", tagId: string | undefined): Promise<FetchNotesResponse> => {
+  const params: Record<string, string | number> = { page };
   if (search.trim() !== "") {
     params.search = search.trim();
+  }
+  if (tagId) {
+    params.tag = tagId;
   }
   
 
@@ -52,33 +49,3 @@ export const fetchNoteById = async (id: string): Promise<Note> => {
   return res.data;
 };
 
-
-export type Category = {
-  id: string;
-  name: string;
-  description: string;
-  createAt: string;
-  updateAt: string;
-  tag?: string
-}
-
-
-export const getNotes = async (tag?: string) => {
-  const res = await instance.get<FetchNotesResponse>('notes', { params: {tag},})
-  return res.data;
-}
-
-// export const fetchPostById = async (postId: number) => {
-//   const res = await instance.get<Post>(`/posts/${postId}`)
-//   return res;
-// };
-
-// export const fetchCategory = async (tag: string | undefined) => {
-//   const res = await instance.get<Category[]>('/tag')
-//   return res;
-// };
-
-// export const fetchCategoryById = async (userId: number) => {
-//   const res = await instance.get<Category>(`/tag/${userId}`)
-//   return res;
-// };

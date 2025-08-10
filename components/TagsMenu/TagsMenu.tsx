@@ -4,14 +4,13 @@ import React, { useState } from 'react';
 import css from './TagsMenu.module.css';
 import Link from 'next/link';
 
-type Props = {
-  categories: string[]; 
-};
 
-const CategoryMenu = ({ categories }: Props) => {
+
+const TagsMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
+const categories = ['All', 'Work', 'Personal', 'Meeting', 'Shopping', 'Todo']
   return (
     <div className={css.menuContainer}>
       <button onClick={toggle} className={css.menuButton}>
@@ -33,4 +32,4 @@ const CategoryMenu = ({ categories }: Props) => {
   );
 };
 
-export default CategoryMenu;
+export default TagsMenu;

@@ -15,10 +15,10 @@ import NoteForm from "@/components/NoteForm/NoteForm";
 
 interface NotesClientProps {
   initialData: FetchNotesResponse;
-  categoryId?: string;
+  tagId?: string;
 }
 
-export default function NotesClient({ initialData }: NotesClientProps) {
+export default function NotesClient({ initialData, tagId }: NotesClientProps) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,11 +27,11 @@ export default function NotesClient({ initialData }: NotesClientProps) {
 
   useEffect(() => {
     setPage(1);
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, tagId]);
 
   const { data, isLoading, error } = useQuery<FetchNotesResponse>({
-    queryKey: ["notes", page, debouncedSearchTerm],
-    queryFn: () => fetchNotes(page, perPage, debouncedSearchTerm),
+    queryKey: ["notes", page, debouncedSearchTerm, tagId],
+    queryFn: () => fetchNotes(page, perPage, debouncedSearchTerm, tagId),
     placeholderData: keepPreviousData,
     initialData: page === 1 && debouncedSearchTerm === "" ? initialData : undefined,
   });
